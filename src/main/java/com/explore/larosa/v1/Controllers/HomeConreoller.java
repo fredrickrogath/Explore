@@ -1,10 +1,12 @@
-package com.explore.larosa.v1.Controllers.SocialLogin;
+package com.explore.larosa.v1.Controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
+@RequestMapping("/v1/api")
 public class HomeConreoller {
     @GetMapping("/")
     public String home() {

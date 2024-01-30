@@ -17,9 +17,6 @@ public class SecurityConfig {
         }).oauth2Login(oauth2Login -> oauth2Login
                 // .loginPage("/login")
                 .failureUrl("/login?error=true")
-        ).formLogin(formLogin -> formLogin
-                .loginPage("/login")
-                .permitAll()
         ).build();
     }
 }
