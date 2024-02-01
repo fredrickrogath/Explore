@@ -18,5 +18,14 @@ public class SecurityConfig {
                 // .loginPage("/login")
                 .failureUrl("/login?error=true")
         ).build();
+
+        // http
+		// 	.authorizeHttpRequests(authorize -> authorize
+		// 		.anyRequest().permitAll()
+		// 	)
+		// 	.oauth2Login(oauth2Login -> oauth2Login
+        //             // .loginPage("/login")
+        //             .failureUrl("/login?error=true"));
+		// return http.build();
     }
 }
