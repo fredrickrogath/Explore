@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/")
 public class HomeConreoller {
     @GetMapping("/home")
     public String home() {
