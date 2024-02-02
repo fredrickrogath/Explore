@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -12,20 +14,27 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/", "/home").permitAll();
+            auth.requestMatchers("/", "/home","/secured","/api/users/register","/api/users/login").permitAll();
             auth.anyRequest().authenticated();
         }).oauth2Login(oauth2Login -> oauth2Login
                 // .loginPage("/login")
                 .failureUrl("/login?error=true")
-        ).build();
+        )
+        .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint()) // Specify the custom entry point
+        .and().build();
+    }
 
-        // http
-		// 	.authorizeHttpRequests(authorize -> authorize
-		// 		.anyRequest().permitAll()
-		// 	)
-		// 	.oauth2Login(oauth2Login -> oauth2Login
-        //             // .loginPage("/login")
-        //             .failureUrl("/login?error=true"));
-		// return http.build();
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, authException) -> {
+            response.sendRedirect("/login"); // Redirect to the login page in case of authentication failure
+        };
     }
 }
+
